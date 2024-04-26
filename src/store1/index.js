@@ -4,5 +4,5 @@ import rootReducer from './reducer'
 // import middle from './middle'
 import thunk from 'redux-thunk'
 const store = createStore(rootReducer, applyMiddleware(thunk))
-
+console.log(store)
 export default store
