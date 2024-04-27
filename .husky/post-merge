@@ -1,22 +1,22 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-​
-# 当前分支的名称
-CURRENT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-​
-# 合并分支的名称
-MERGE_BRANCH_NAME="${GIT_REFLOG_ACTION//merge /}"
-​
-echo "------$MERGE_BRANCH_NAME"
-​
-# 禁止合并的公共分支
-forbidden_branches=("pre" "dev")
-​
-# 判断当前合并的分支是否属于禁止合并的分支
-if [[ " ${forbidden_branches[*]} " = *" $MERGE_BRANCH_NAME "* ]]; then
-  echo "检测到非法合并: $CURRENT_BRANCH_NAME merge $MERGE_BRANCH_NAME"
-  echo "撤销合并中..."
-  git reset --merge HEAD@{1}  # 撤回合并
-  echo "已撤销合并"
-  exit 1
-fi
+#!/bin/sh
+#----------------------------------------------------------
+#   檢查是否合併了 Enhancement，建立備份分支
+#----------------------------------------------------------
+#  * Author: 羊小咩 Lamb-Mei
+#  * Update : 2014/12/20
+#  * Description: 當合併了 Enhancement ，顯示警告跟建立備份用分支
+#
+
+
+echo $GIT_REFLOG_ACTION | grep -q "merge Enhancement"  >> /dev/null;
+
+if [ $? == 0 ]; then  
+    #已經合併了不想要的分支
+    echo "Error 合併包含 Enhancement !!"
+    echo "請立即使用 reset 或 revert 解決此錯誤 !!"
+    #複製原始的狀態
+    git branch AP_ISSUE_HEAD_bak HEAD^1
+    git branch AP_ISSUE_Master_bak master^1
+else  
+    echo "check OK 合併檢查無誤!!!"  
+fi 
