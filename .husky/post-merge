@@ -8,11 +8,11 @@
 #
 
 
-echo $GIT_REFLOG_ACTION | grep -q "merge Enhancement"  >> /dev/null;
+echo $GIT_REFLOG_ACTION | grep -q "merge dev"  >> /dev/null;
 
 if [ $? == 0 ]; then  
     #已經合併了不想要的分支
-    echo "Error 合併包含 Enhancement !!"
+    echo "Error 合併包含 dev !!"
     echo "請立即使用 reset 或 revert 解決此錯誤 !!"
     #複製原始的狀態
     git branch AP_ISSUE_HEAD_bak HEAD^1
