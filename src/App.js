@@ -1,17 +1,11 @@
 
 import { useEffect, useState } from 'react';
-// import Child from './components/Child'
-// import Comment from './comment/comment';
-import StoreTest from './storeTest/storeTest';
+import StoreTest from './pages/storeTest/index';
 
 function App() {
 
-  // console.log(Redux)
-
   const [state, setState] = useState('')
   useEffect(() => {
-    // console.log('parent render 了')
-    // console.log(0)
     setState('APP')
   }, [])
   
